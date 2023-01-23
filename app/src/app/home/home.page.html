@@ -8,22 +8,7 @@
 
 <ion-content>
 
-  <ion-list>
-    <ion-item>
-      <ion-text color="primary">
-        <h2>What is your name?</h2>
-      </ion-text>
-    </ion-item>
-    <ion-item>
-      <ion-input required clearInput type="text" name="title" [(ngModel)]="name">
-      </ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-button (click)="go()">go</ion-button>
-    </ion-item>
-    <ion-item *ngIf="message">
-      <h3>{{ message }}</h3>
-    </ion-item>
-  </ion-list>
+  <ion-button (click)="getArticles()">get articles</ion-button>
+  <ion-button (click)="getArticle()">get article</ion-button>
 
 </ion-content>

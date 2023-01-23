@@ -1,9 +1,8 @@
 import { createService } from '@phero/server'
 
-async function helloWorld(name: string): Promise<string> {
-  return `Hi there, ${name}!`
-}
+import * as articleFunctions from "./article/article"
 
-export const helloWorldService = createService({
-  helloWorld,
-})
+export const articleService = createService({
+  getArticle: articleFunctions.getArticle,
+  listArticles: articleFunctions.getArticles
+});
