@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "@phero/server": "^0.9.14-alpha.0"
+  }
+}

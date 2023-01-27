@@ -20,7 +20,7 @@ export async function getArticle(id: string): Promise<Article> {
 //         components : []
 //     }
 //   return article;
-throw new ArticleNotFoundError()
+    throw new ArticleNotFoundError()
 }
 
 
