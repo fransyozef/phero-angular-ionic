@@ -13,6 +13,6 @@
     "typescript": "^4.9.4"
   },
   "dependencies": {
-    "@phero/server": "^0.9.14-alpha.0"
+    "@phero/server": "^0.10.4"
   }
 }
