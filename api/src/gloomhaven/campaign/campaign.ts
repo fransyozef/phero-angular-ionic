@@ -1,21 +1,51 @@
 import { v4 as uuidv4 } from 'uuid';
 
 import { getDatabase } from "../db"
-import { GloomhavenError,GloomhavenErrors } from "../errors"
-import { getPlayersInCampaign } from "../players/players"
+import { GloomhavenError, GloomhavenErrors } from "../errors"
+import { getPlayersInCampaign, deletePlayersFromCompaign } from "../players/players"
 import { GloomhavenCampaign, GloomhavenCampaignAddDto, GloomhavenPartyError } from "./campaign.types"
 
-export async function getCampaign(campaignID:string): Promise<GloomhavenCampaign> {
+export async function deleteCampaign(campaignID: string): Promise<boolean> {
+    const db = getDatabase()
+
+    let indexFound = -1
+    try {
+        indexFound = await db.getIndex("/campaigns", campaignID)
+    } catch (e) {
+        throw new GloomhavenError(GloomhavenErrors.CAMPAIGN_NOT_FOUND)
+    }
+
+    if (indexFound < 0) {
+        throw new GloomhavenError(GloomhavenErrors.CAMPAIGN_NOT_FOUND)
+    }
+
+    try {
+        await deletePlayersFromCompaign(campaignID)
+    } catch (e) {
+
+    }
+
+    // Delete the campaign
+    try {
+        await db.delete(`/campaigns[${indexFound}]`)
+    } catch (e) {
+        throw new GloomhavenError(GloomhavenErrors.CAMPAIGN_NOT_FOUND)
+    }
+
+    return true
+}
+
+export async function getCampaign(campaignID: string): Promise<GloomhavenCampaign> {
     const db = getDatabase()
     try {
-        const campaign = await db.find<GloomhavenCampaign>("/campaigns", (campaign:GloomhavenCampaign) => {
+        const campaign = await db.find<GloomhavenCampaign>("/campaigns", (campaign: GloomhavenCampaign) => {
             return campaign.id === campaignID
         })
-        if(campaign) {
+        if (campaign) {
             // now fetch the players
             const players = await getPlayersInCampaign(campaignID)
-            if(players) {
-                campaign.players = players 
+            if (players) {
+                campaign.players = players
             }
             return campaign
         }
