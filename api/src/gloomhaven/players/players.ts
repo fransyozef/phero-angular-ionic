@@ -2,8 +2,25 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { getDatabase } from "../db"
 import { getCampaign } from "../campaign/campaign"
-import { GloomhavenError,GloomhavenErrors } from "../errors"
+import { GloomhavenError, GloomhavenErrors } from "../errors"
 import { GloomhavenPlayer, GloomhavenPlayerAddDto } from './players.types';
+
+export async function deletePlayersFromCompaign(campaignID: string): Promise<void> {
+    const db = getDatabase()
+    const players = await getPlayersInCampaign(campaignID)
+    if (players && players.length > 0) {
+        const totalPlayers = players.length
+        for (let i = 0; i < totalPlayers; i++) {
+            const id = players[i].id
+            const index = await db.getIndex("/players", "campaignID", campaignID);
+            try {
+                await db.delete(`players[${index}]`)
+            } catch (e) {
+                throw new GloomhavenError(GloomhavenErrors.GENERIC)
+            }
+        }
+    }
+}
 
 export async function getPlayersInCampaign(campaignID: string): Promise<GloomhavenPlayer[]> {
     const db = getDatabase()
@@ -47,7 +64,7 @@ export async function addPlayerToCampaign(campaignID: string, payload: Gloomhave
             })
 
             if (found) {
-                console.log('Player type already exists : ' , player.character);
+                console.log('Player type already exists : ', player.character);
                 throw new GloomhavenError(GloomhavenErrors.PLAYER_TYPE_ALREADY_IN_CAMPAIGN)
             }
 

@@ -7,13 +7,17 @@ import { GloomhavenService } from '../_services/gloomhaven.service';
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
 })
-export class HomePage {
+export class HomePage implements OnInit {
 
-  articles: GloomhavenCampaign[] = [];
+  campaigns: GloomhavenCampaign[] = [];
 
   constructor(
     private gloomhavenService: GloomhavenService
   ) { }
+
+  ngOnInit(): void {
+    this.getCampaigns()
+  }
 
 
   async getCampaign() {
@@ -34,7 +38,7 @@ export class HomePage {
     try {
       const campaigns = await this.gloomhavenService.getCampaigns()
       console.log(campaigns);
-      this.articles = campaigns;
+      this.campaigns = campaigns;
     } catch (e) {
       console.log("Something went wrong");
     }
@@ -53,15 +57,6 @@ export class HomePage {
       } else {
         console.log(e)
       }
-    }
-  }
-
-  async dummy() {
-    try {
-      const returnValue = await this.gloomhavenService.dummy();
-      console.log(returnValue);
-    } catch (e) {
-
     }
   }
 
@@ -85,6 +80,22 @@ export class HomePage {
         console.log(e)
       }
     }
+  }
+
+  async deleteCampaign() {
+    const campaignID = "96da1218-e72a-47ae-ad28-9f956991dd14"
+    try {
+      const returnValue = await this.gloomhavenService.deleteCampaign(campaignID)
+    } catch (e) {
+      if (e instanceof GloomhavenError) {
+        alert(e.message)
+      } else {
+        console.log(e)
+      }
+    }
+
+    this.campaigns = []
+    await this.getCampaigns()
   }
 
 }

@@ -1,14 +1,27 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Phero Angular Example
+      Gloomhaven Campaign tracker
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-button (click)="getCampaigns()">get campaigns</ion-button>
-  <ion-button (click)="addCampaign()">add campaign</ion-button>
-  <ion-button (click)="getCampaign()">get campaign</ion-button>
-  <ion-button (click)="addPlayerToCampaign()">add player to campaign</ion-button>
+
+  <ion-button (click)="deleteCampaign()">delete</ion-button>
+
+  <ion-card *ngFor="let campaign of campaigns;">
+    <ion-card-header>
+      <ion-card-title>{{ campaign.title }}</ion-card-title>
+    </ion-card-header>
+  
+    <ion-card-content>
+      <ul>
+        <li>townprosperity: {{ campaign.townProsperity }}</li>
+        <li>reputation: {{ campaign.reputation }}</li>
+        <li>current scenario: {{ campaign.currentScenario }}</li>
+      </ul>
+    </ion-card-content>
+  </ion-card>
+
 </ion-content>

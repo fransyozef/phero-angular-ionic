@@ -12,10 +12,6 @@ export class GloomhavenService {
 
   constructor() { }
 
-  async dummy(): Promise<GloomhavenPlayer[]> {
-    return await pheroClient.gloomhavenService.getPlayersInCampaign("1e79b4be-f5ba-4bac-a406-bb72411c6984")
-  }
-
   async getPlayersInCampaign(campaignID : string): Promise<GloomhavenPlayer[]> {
     return await pheroClient.gloomhavenService.getPlayersInCampaign(campaignID)
   }
@@ -34,6 +30,10 @@ export class GloomhavenService {
 
   async addCampaign(payload:GloomhavenCampaignAddDto): Promise<GloomhavenCampaign> {
     return await pheroClient.gloomhavenService.addCampaign(payload)
+  }
+
+  async deleteCampaign(campaignID:string): Promise<boolean> {
+    return await pheroClient.gloomhavenService.deleteCampaign(campaignID)
   }
 
 
