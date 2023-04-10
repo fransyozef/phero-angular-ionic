@@ -1,30 +1,42 @@
-export interface Article {
+export interface GloomhavenCampaign extends GloomhavenCampaignAddDto {
     id: string;
+    reputation: number;
+    townProsperity: number;
+    players: GloomhavenPlayer[];
+    currentScenario: number;
+}
+export interface GloomhavenCampaignAddDto {
     title: string;
-    components: ArticleComponent[];
 }
-export type ArticleComponent = {
-    type: ArticleComponentType.Paragraph;
-    content: string;
-} | {
-    type: ArticleComponentType.Image;
-    url: string;
-} | {
-    type: ArticleComponentType.Quote;
-    quote: string;
-    source: string;
-};
-export enum ArticleComponentType {
-    Paragraph = "paragraph",
-    Image = "image",
-    Quote = "quote"
+export interface GloomhavenPlayer extends GloomhavenPlayerAddDto {
+    id: string;
+    campaignID: string;
 }
-export class ArticleNotFoundError extends Error {
+export interface GloomhavenPlayerAddDto {
+    name: string;
+    level: number;
+    xp: number;
+    gold: number;
+    goldTokens: number;
+    character: GloomhavenCharacters;
+}
+export enum GloomhavenCharacters {
+    Brute = "Brute",
+    Cragheart = "Cragheart",
+    Mindthief = "Mindthief",
+    Scoundrel = "Scoundrel",
+    Spellweaver = "Spellweaver",
+    Tinkerer = "Tinkerer"
+}
+export class GloomhavenError extends Error {
     constructor(message: string);
 }
 export abstract class PheroService<TContext = {}> {
 }
-export class articleService extends PheroService {
-    getArticle(id: string): Promise<Article>;
-    listArticles(): Promise<Article[]>;
+export class gloomhavenService extends PheroService {
+    getCampaigns(): Promise<GloomhavenCampaign[]>;
+    addCampaign(payload: GloomhavenCampaignAddDto): Promise<GloomhavenCampaign>;
+    getCampaign(campaignID: string): Promise<GloomhavenCampaign>;
+    getPlayersInCampaign(campaignID: string): Promise<GloomhavenPlayer[]>;
+    addPlayerToCampaign(campaignID: string, payload: GloomhavenPlayerAddDto): Promise<GloomhavenPlayer>;
 }
