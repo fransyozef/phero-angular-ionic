@@ -6,7 +6,7 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { ArticlesService } from './_services/articles.service';
+import { GloomhavenService } from './_services/gloomhaven.service';
 
 @NgModule({
   declarations: [AppComponent],
