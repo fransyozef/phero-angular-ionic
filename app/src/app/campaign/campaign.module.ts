@@ -8,6 +8,7 @@ import { CampaignPageRoutingModule } from './campaign-routing.module';
 
 import { CampaignPage } from './campaign.page';
 import { CampaignAddPage } from './campaign-add/campaign-add.page';
+import { CampaignEditPage } from './campaign-edit/campaign-edit.page';
 
 @NgModule({
   imports: [
@@ -18,6 +19,10 @@ import { CampaignAddPage } from './campaign-add/campaign-add.page';
     ReactiveFormsModule,
     FormsModule,
   ],
-  declarations: [CampaignPage,CampaignAddPage]
+  declarations: [
+    CampaignPage,
+    CampaignAddPage,
+    CampaignEditPage
+  ]
 })
 export class CampaignPageModule {}

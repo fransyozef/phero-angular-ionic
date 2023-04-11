@@ -25,6 +25,7 @@
 
       <ion-buttons>
         <ion-button (click)="deleteCampaign(campaign.id)">delete</ion-button>
+        <ion-button routerLink="/campaign/edit/{{campaign.id}}">edit</ion-button>
       </ion-buttons>
     </ion-card-content>
 
