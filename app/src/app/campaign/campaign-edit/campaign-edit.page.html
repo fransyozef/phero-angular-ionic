@@ -8,5 +8,48 @@
 </ion-header>
 
 <ion-content>
-
+  <form [formGroup]="itemForm" *ngIf="itemForm">
+    <ion-list lines="full" class="ion-no-margin ion-no-padding">
+      <ion-item-group>
+        <ion-item>
+          <ion-text color="secondary">
+            <h1>Campaign details</h1>
+          </ion-text>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked">Title <ion-text color="danger">*</ion-text>
+          </ion-label>
+          <ion-input required clearInput type="text" name="title" formControlName="title" [value]="item.title">
+          </ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked">Town prosperity <ion-text color="danger">*</ion-text>
+          </ion-label>
+          <ion-input required clearInput type="number" name="townProsperity" formControlName="townProsperity"
+            [value]="item.townProsperity">
+          </ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked">Reputation <ion-text color="danger">*</ion-text>
+          </ion-label>
+          <ion-input required clearInput type="number" name="reputation" formControlName="reputation"
+            [value]="item.reputation">
+          </ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked">Current Scenario <ion-text color="danger">*</ion-text>
+          </ion-label>
+          <ion-input required clearInput type="number" name="currentScenario" formControlName="currentScenario"
+            [value]="item.currentScenario">
+          </ion-input>
+        </ion-item>
+      </ion-item-group>
+    </ion-list>
+  </form>
 </ion-content>
+
+<ion-footer>
+  <ion-button expand="block" type="submit" (click)="submit()" [disabled]="!itemForm.valid || isSubmitting">
+    Update campaign
+  </ion-button>
+</ion-footer>

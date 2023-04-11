@@ -3,7 +3,27 @@ import { v4 as uuidv4 } from 'uuid';
 import { getDatabase } from "../db"
 import { GloomhavenError, GloomhavenErrors } from "../errors"
 import { getPlayersInCampaign, deletePlayersFromCompaign } from "../players/players"
-import { GloomhavenCampaign, GloomhavenCampaignAddDto, GloomhavenPartyError } from "./campaign.types"
+import { GloomhavenCampaign, GloomhavenCampaignAddDto, GloomhavenCampaignEditDto, GloomhavenPartyError } from "./campaign.types"
+
+export async function updateCampaign(campaignID: string, payload: GloomhavenCampaignEditDto): Promise<GloomhavenCampaign> {
+    const db = getDatabase()
+    const campaign = await getCampaign(campaignID)
+    if (!campaign) {
+        throw new GloomhavenError(GloomhavenErrors.CAMPAIGN_NOT_FOUND)
+    }
+
+    const updatedCampaign: GloomhavenCampaign = { ...campaign, ...payload }
+    const indexFound = await db.getIndex("/campaigns", campaignID)
+    try {
+        await db.delete(`/campaigns[${indexFound}]`)
+        await db.reload()
+        await db.push("/campaigns[]", updatedCampaign, true);
+        return updatedCampaign
+    } catch (e) {
+        throw new GloomhavenError(GloomhavenErrors.GENERIC)
+    }
+}
+
 
 export async function deleteCampaign(campaignID: string): Promise<boolean> {
     const db = getDatabase()

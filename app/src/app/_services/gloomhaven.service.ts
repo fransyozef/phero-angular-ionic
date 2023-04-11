@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 
-import { PheroClient, GloomhavenCampaign, GloomhavenCampaignAddDto, GloomhavenPlayer, GloomhavenPlayerAddDto, GloomhavenCharacters } from "../../phero.generated";
+import { PheroClient, GloomhavenCampaign, GloomhavenCampaignAddDto, GloomhavenPlayer, GloomhavenPlayerAddDto, GloomhavenCharacters, GloomhavenCampaignEditDto } from "../../phero.generated";
 const fetch = window.fetch.bind(this);
 const pheroClient = new PheroClient(fetch);
 
@@ -18,6 +18,10 @@ export class GloomhavenService {
 
   async addPlayerToCampaign(campaignID : string , payload:GloomhavenPlayerAddDto): Promise<GloomhavenPlayer> {
     return await pheroClient.gloomhavenService.addPlayerToCampaign(campaignID,payload)
+  }
+
+  async updateCampaign(campaignID: string,payload:GloomhavenCampaignEditDto): Promise<GloomhavenCampaign> {
+    return await pheroClient.gloomhavenService.updateCampaign(campaignID,payload)
   }
 
   async getCampaign(campaignID: string): Promise<GloomhavenCampaign> {

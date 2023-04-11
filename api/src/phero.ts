@@ -8,6 +8,7 @@ export const gloomhavenService = createService({
   addCampaign: gloomhavenCampaignFunctions.addCampaign,
   getCampaign: gloomhavenCampaignFunctions.getCampaign,
   deleteCampaign: gloomhavenCampaignFunctions.deleteCampaign,
+  updateCampaign: gloomhavenCampaignFunctions.updateCampaign,
   getPlayersInCampaign: gloomhavenPlayerFunctions.getPlayersInCampaign,
   addPlayerToCampaign: gloomhavenPlayerFunctions.addPlayerToCampaign
 })

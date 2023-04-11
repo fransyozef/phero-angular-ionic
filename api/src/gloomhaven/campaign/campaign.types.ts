@@ -4,13 +4,17 @@ export interface GloomhavenCampaignAddDto {
   title: string
 }
 
-export interface GloomhavenCampaign extends GloomhavenCampaignAddDto {
-  id: string
+export interface GloomhavenCampaignEditDto extends GloomhavenCampaignAddDto {
   reputation: number
   townProsperity: number
-  players: GloomhavenPlayer[]
   currentScenario: number
 }
+
+export interface GloomhavenCampaign extends GloomhavenCampaignEditDto {
+  id: string
+  players: GloomhavenPlayer[]
+}
+
 
 export class GloomhavenPartyError extends Error {
   constructor() {

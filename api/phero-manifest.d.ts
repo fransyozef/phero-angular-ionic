@@ -1,8 +1,10 @@
-export interface GloomhavenCampaign extends GloomhavenCampaignAddDto {
+export interface GloomhavenCampaign extends GloomhavenCampaignEditDto {
     id: string;
+    players: GloomhavenPlayer[];
+}
+export interface GloomhavenCampaignEditDto extends GloomhavenCampaignAddDto {
     reputation: number;
     townProsperity: number;
-    players: GloomhavenPlayer[];
     currentScenario: number;
 }
 export interface GloomhavenCampaignAddDto {
@@ -38,6 +40,7 @@ export class gloomhavenService extends PheroService {
     addCampaign(payload: GloomhavenCampaignAddDto): Promise<GloomhavenCampaign>;
     getCampaign(campaignID: string): Promise<GloomhavenCampaign>;
     deleteCampaign(campaignID: string): Promise<boolean>;
+    updateCampaign(campaignID: string, payload: GloomhavenCampaignEditDto): Promise<GloomhavenCampaign>;
     getPlayersInCampaign(campaignID: string): Promise<GloomhavenPlayer[]>;
     addPlayerToCampaign(campaignID: string, payload: GloomhavenPlayerAddDto): Promise<GloomhavenPlayer>;
 }
