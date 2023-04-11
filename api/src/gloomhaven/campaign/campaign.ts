@@ -40,9 +40,9 @@ export async function deleteCampaign(campaignID: string): Promise<boolean> {
     }
 
     try {
-        await deletePlayersFromCompaign(campaignID)
+        const deletedPlayers = await deletePlayersFromCompaign(campaignID)
     } catch (e) {
-
+        console.log(e)
     }
 
     // Delete the campaign

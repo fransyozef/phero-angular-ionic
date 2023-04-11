@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { AlertController, IonRouterOutlet, NavController } from '@ionic/angular';
+import { AlertController, IonRouterOutlet, ModalController, NavController } from '@ionic/angular';
 import { GloomhavenService } from 'src/app/_services/gloomhaven.service';
+import { PlayerModalPage } from 'src/app/player-modal/player-modal.page';
 import { GloomhavenCampaign, GloomhavenCampaignEditDto, GloomhavenError } from 'src/phero.generated';
 
 @Component({
@@ -31,6 +32,7 @@ export class CampaignEditPage implements OnInit {
     private ionRouterOutlet: IonRouterOutlet,
     public alertController: AlertController,
     private gloomhavenService: GloomhavenService,
+    public modalController: ModalController,
   ) { }
 
   ngOnInit() {
@@ -112,6 +114,58 @@ export class CampaignEditPage implements OnInit {
       ]
     });
     await alert.present();
+  }
+
+  async presentPlayerDeleteSuccess() {
+    const alert = await this.alertController.create({
+      header: 'Success!',
+      subHeader : 'Player has been removed from the campaign',
+      buttons: [
+        {
+          text: 'Okay'
+        }
+      ]
+    });
+    await alert.present();
+  }
+
+  async addPlayer() {
+    await this.presentMapModal()
+  }
+
+
+  async presentMapModal() {
+
+    const modal = await this.modalController.create({
+      component: PlayerModalPage,
+      componentProps: { 
+        campaignID : this.campaignID
+      }
+    });
+
+    await modal.present();
+
+    const { data } = await modal.onWillDismiss();
+    // tslint:disable-next-line:no-string-literal
+    if (data && data.player) {
+      this.campaign.players.push(data.player)
+    }
+  }
+
+  async deletePlayer(playerID:string) {
+    try {
+      const result = await this.gloomhavenService.deletePlayer(playerID)
+      if(result === true) {
+        await this.presentPlayerDeleteSuccess()
+        await this.getItem()
+      }
+    } catch (e) {
+      if (e instanceof GloomhavenError) {
+        alert(e.message)
+      } else {
+        console.log(e)
+      }
+    }
   }
 
 }

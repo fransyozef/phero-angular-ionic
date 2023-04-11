@@ -44,6 +44,36 @@
           </ion-input>
         </ion-item>
       </ion-item-group>
+      <ion-item-group>
+        <ion-item>
+          <ion-text color="secondary">
+            <h1>Players</h1>
+          </ion-text>
+        </ion-item> 
+        <ion-item-divider color="light">
+          <ion-button slot="start" *ngIf="campaign" [disabled]="campaign.players.length >=4" (click)="addPlayer()">
+            <ion-icon slot="icon-only" name="add-circle" slot="end"></ion-icon>
+            Add
+          </ion-button>
+        </ion-item-divider>
+        <ion-item *ngIf="campaign">
+
+          <ion-card *ngFor="let player of campaign.players;" >
+            <ion-card-header>
+              <ion-card-title>{{ player.name }}</ion-card-title>
+              <ion-card-subtitle>{{ player.character }} lvl {{ player.level }}</ion-card-subtitle>
+            </ion-card-header>
+          
+            <ion-card-content>
+              <ion-buttons>
+                <ion-button (click)="deletePlayer(player.id)">delete</ion-button>
+              </ion-buttons>
+            </ion-card-content>
+          </ion-card>
+
+
+        </ion-item>       
+      </ion-item-group>
     </ion-list>
   </form>
 </ion-content>

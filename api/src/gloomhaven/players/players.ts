@@ -5,21 +5,47 @@ import { getCampaign } from "../campaign/campaign"
 import { GloomhavenError, GloomhavenErrors } from "../errors"
 import { GloomhavenPlayer, GloomhavenPlayerAddDto } from './players.types';
 
-export async function deletePlayersFromCompaign(campaignID: string): Promise<void> {
+export async function deletePlayer(playerID: string): Promise<boolean> {
+    const db = getDatabase()
+    let returnValue = false
+    let index = -1
+    try {
+        index = await db.getIndex("/players", playerID)
+        if (index < 0) {
+            throw new GloomhavenError(GloomhavenErrors.PLAYER_NOT_FOUND)
+        }
+    } catch (e) {
+        throw new GloomhavenError(GloomhavenErrors.PLAYER_NOT_FOUND)
+    }
+
+    try {
+        await db.delete(`/players[${index}]`)
+        returnValue = true;
+    } catch (e) {
+        throw new GloomhavenError(GloomhavenErrors.GENERIC)
+    }
+
+    return returnValue
+}
+
+export async function deletePlayersFromCompaign(campaignID: string): Promise<boolean> {
+    let returnValue = false
     const db = getDatabase()
     const players = await getPlayersInCampaign(campaignID)
     if (players && players.length > 0) {
         const totalPlayers = players.length
         for (let i = 0; i < totalPlayers; i++) {
             const id = players[i].id
-            const index = await db.getIndex("/players", "campaignID", campaignID);
+            const index = await db.getIndex("/players", id)
+            console.log("campaignID" , campaignID , "index" , index)
             try {
-                await db.delete(`players[${index}]`)
-            } catch (e) {
-                throw new GloomhavenError(GloomhavenErrors.GENERIC)
-            }
+                await db.delete(`/players[${index}]`)
+            } catch (e) { }
+            await db.reload()
         }
+        returnValue = true
     }
+    return returnValue
 }
 
 export async function getPlayersInCampaign(campaignID: string): Promise<GloomhavenPlayer[]> {
@@ -46,9 +72,6 @@ export async function addPlayerToCampaign(campaignID: string, payload: Gloomhave
         campaignID: campaignID,
         ...payload
     }
-    player.name = `${player.id} ${player.name}`
-
-    console.log(player);
 
     const campaign = await getCampaign(campaignID)
     if (campaign) {

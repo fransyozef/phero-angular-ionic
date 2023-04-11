@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { AlertController, IonRouterOutlet, LoadingController, ModalController, NavController } from '@ionic/angular';
 import { GloomhavenService } from 'src/app/_services/gloomhaven.service';
-import { GloomhavenCampaignAddDto, GloomhavenError } from 'src/phero.generated';
+import { GloomhavenCampaign, GloomhavenCampaignAddDto, GloomhavenError } from 'src/phero.generated';
 
 @Component({
   selector: 'app-campaign-add',
@@ -18,6 +18,8 @@ export class CampaignAddPage implements OnInit {
   item: GloomhavenCampaignAddDto = {
     title: ''
   };
+
+  campaign!: GloomhavenCampaign;
 
   constructor(    
     private ionRouterOutlet: IonRouterOutlet,
@@ -42,6 +44,7 @@ export class CampaignAddPage implements OnInit {
     this.isSubmitting = true;
       try {
         const campaign = await this.gloomhavenService.addCampaign(this.itemForm.value);
+        this.campaign = campaign
         await this.presentSuccess()
       } catch (e) {
         if (e instanceof GloomhavenError) {
@@ -61,7 +64,7 @@ export class CampaignAddPage implements OnInit {
         {
           text: 'Okay',
           handler: () => {
-            this.navCtrl.navigateBack('/');
+            this.navCtrl.navigateBack(`/campaign/edit/${this.campaign.id}`);
           }
         }
       ]

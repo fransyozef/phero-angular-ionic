@@ -1,0 +1,41 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Add Player</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <form [formGroup]="itemForm" *ngIf="itemForm">
+    <ion-list lines="full" class="ion-no-margin ion-no-padding">
+      <ion-item-group>
+        <ion-item>
+          <ion-label position="stacked">Name <ion-text color="danger">*</ion-text>
+          </ion-label>
+          <ion-input required clearInput type="text" name="name" formControlName="name" [value]="item.name">
+          </ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked">Gloomhaven character <ion-text color="danger">*</ion-text>
+          </ion-label> 
+        </ion-item>             
+          <ion-list>
+            <ion-item>
+              <ion-select aria-label="character" placeholder="Select character" name="character" formControlName="character" [value]="item.character">
+                <ion-select-option *ngFor="let gloomhavenCharacter of gloomhavenCharacters;" value="{{ gloomhavenCharacter }}" >{{ gloomhavenCharacter }}</ion-select-option>
+              </ion-select>
+            </ion-item>
+          </ion-list>
+      </ion-item-group>
+    </ion-list>
+  </form>
+
+</ion-content>
+
+<ion-footer>
+  <ion-footer>
+    <ion-button expand="block" type="submit" (click)="submit()" [disabled]="!itemForm.valid || isSubmitting">
+      Add player
+    </ion-button>
+  </ion-footer>
+</ion-footer>

@@ -12,6 +12,10 @@ export class GloomhavenService {
 
   constructor() { }
 
+  async deletePlayer(playerID : string): Promise<boolean> {
+    return await pheroClient.gloomhavenService.deletePlayer(playerID)
+  }
+
   async getPlayersInCampaign(campaignID : string): Promise<GloomhavenPlayer[]> {
     return await pheroClient.gloomhavenService.getPlayersInCampaign(campaignID)
   }
