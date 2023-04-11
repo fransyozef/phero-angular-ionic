@@ -16,7 +16,7 @@ export class HomePage implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.getCampaigns()
+
   }
 
 
@@ -34,31 +34,7 @@ export class HomePage implements OnInit {
     }
   }
 
-  async getCampaigns() {
-    try {
-      const campaigns = await this.gloomhavenService.getCampaigns()
-      console.log(campaigns);
-      this.campaigns = campaigns;
-    } catch (e) {
-      console.log("Something went wrong");
-    }
-  }
 
-  async addCampaign() {
-    try {
-      const payload: GloomhavenCampaignAddDto = {
-        title: 'blaaaat'
-      }
-      const article = await this.gloomhavenService.addCampaign(payload);
-      console.log(article);
-    } catch (e) {
-      if (e instanceof GloomhavenError) {
-        alert(e.message)
-      } else {
-        console.log(e)
-      }
-    }
-  }
 
   async addPlayerToCampaign() {
     const campaignID = "1e79b4be-f5ba-4bac-a406-bb72411c6984"
@@ -82,20 +58,5 @@ export class HomePage implements OnInit {
     }
   }
 
-  async deleteCampaign() {
-    const campaignID = "96da1218-e72a-47ae-ad28-9f956991dd14"
-    try {
-      const returnValue = await this.gloomhavenService.deleteCampaign(campaignID)
-    } catch (e) {
-      if (e instanceof GloomhavenError) {
-        alert(e.message)
-      } else {
-        console.log(e)
-      }
-    }
-
-    this.campaigns = []
-    await this.getCampaigns()
-  }
 
 }

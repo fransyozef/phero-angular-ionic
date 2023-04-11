@@ -74,7 +74,6 @@ export async function addCampaign(payload: GloomhavenCampaignAddDto): Promise<Gl
         currentScenario: 0,
         ...payload
     }
-    campaign.title = `${campaign.id} ${campaign.title}`
 
     try {
         await db.push("/campaigns[]", campaign, true);

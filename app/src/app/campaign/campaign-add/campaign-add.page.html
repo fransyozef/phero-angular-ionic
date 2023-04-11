@@ -1,0 +1,36 @@
+<ion-header>
+  <ion-toolbar color="light">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+      Add new campaign
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="itemForm">
+    <ion-list lines="full" class="ion-no-margin ion-no-padding">
+      <ion-item-group>
+        <ion-item>
+
+          <ion-text color="secondary">
+            <h1>Campaign details</h1>
+          </ion-text>
+
+          <ion-label position="stacked">Title <ion-text color="danger">*</ion-text>
+          </ion-label>
+          <ion-input required clearInput type="text" name="title" formControlName="title" [value]="item.title">
+          </ion-input>
+        </ion-item>
+      </ion-item-group>
+    </ion-list>
+  </form>
+</ion-content>
+
+<ion-footer>
+  <ion-button expand="block" type="submit" (click)="submit()" [disabled]="!itemForm.valid || isSubmitting">
+    Submit new campaign
+  </ion-button>
+</ion-footer>
