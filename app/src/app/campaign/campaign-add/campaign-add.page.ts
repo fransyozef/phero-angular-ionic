@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
-import { AlertController, IonRouterOutlet, LoadingController, ModalController, NavController } from '@ionic/angular';
-import { GloomhavenService } from 'src/app/_services/gloomhaven.service';
-import { GloomhavenCampaign, GloomhavenCampaignAddDto, GloomhavenError } from 'src/phero.generated';
+import { Component, OnInit } from '@angular/core'
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms'
+import { AlertController, IonRouterOutlet, LoadingController, ModalController, NavController } from '@ionic/angular'
+import { GloomhavenCampaign, GloomhavenCampaignAddDto, GloomhavenError } from '../../../phero.generated'
+import { GloomhavenService } from '../../_services/gloomhaven.service'
 
 @Component({
   selector: 'app-campaign-add',
@@ -11,10 +11,10 @@ import { GloomhavenCampaign, GloomhavenCampaignAddDto, GloomhavenError } from 's
 })
 export class CampaignAddPage implements OnInit {
 
-  itemForm!: UntypedFormGroup;
-
+  showHomeButton = false
   isSubmitting = false
 
+  itemForm!: UntypedFormGroup;
   item: GloomhavenCampaignAddDto = {
     title: ''
   };
@@ -32,6 +32,7 @@ export class CampaignAddPage implements OnInit {
 
   ngOnInit() {
     this.initForm();
+    this.showHomeButton = !this.ionRouterOutlet.canGoBack()
   }
 
   initForm() {
@@ -64,7 +65,7 @@ export class CampaignAddPage implements OnInit {
         {
           text: 'Okay',
           handler: () => {
-            this.navCtrl.navigateBack(`/campaign/edit/${this.campaign.id}`);
+            this.navCtrl.navigateRoot(`/campaign/edit/${this.campaign.id}`);
           }
         }
       ]

@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { GloomhavenCampaign, GloomhavenCampaignAddDto, GloomhavenCharacters, GloomhavenPlayerAddDto, GloomhavenError } from "../../phero.generated";
-import { GloomhavenService } from '../_services/gloomhaven.service';
-import { AlertController, LoadingController, ModalController } from '@ionic/angular';
+import { Component, OnInit } from '@angular/core'
+import { AlertController, LoadingController, ModalController } from '@ionic/angular'
+import { GloomhavenCampaign, GloomhavenError } from "../../phero.generated"
+import { GloomhavenService } from '../_services/gloomhaven.service'
 
 @Component({
   selector: 'app-campaign',
@@ -19,17 +19,16 @@ export class CampaignPage implements OnInit {
     public modalController: ModalController,
   ) { }
 
-
   ngOnInit(): void {
     this.getCampaigns()
   }
-
 
   async getCampaigns() {
     this.campaigns = []
     try {
       const campaigns = await this.gloomhavenService.getCampaigns()
       this.campaigns = campaigns;
+      console.log(this.campaigns)
     } catch (e) {
       alert("Something went wrong");
     }
@@ -37,7 +36,7 @@ export class CampaignPage implements OnInit {
 
   async deleteCampaign(campaignID:string) {
     try {
-      const returnValue = await this.gloomhavenService.deleteCampaign(campaignID)
+      await this.gloomhavenService.deleteCampaign(campaignID)
       await this.presentDeleteCampaignSuccess()
     } catch (e) {
       if (e instanceof GloomhavenError) {

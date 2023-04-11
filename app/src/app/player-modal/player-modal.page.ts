@@ -1,9 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
-import { ModalController, ActionSheetController, IonSearchbar, ToastController } from '@ionic/angular';
-import { GloomhavenCharacters, GloomhavenError } from 'src/phero.generated';
-import { GloomhavenPlayerAddDto } from 'src/phero.generated';
-import { GloomhavenService } from '../_services/gloomhaven.service';
+import { Component, OnInit } from '@angular/core'
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms'
+import { ModalController, ActionSheetController } from '@ionic/angular'
+import { GloomhavenCharacters, GloomhavenError, GloomhavenPlayerAddDto } from 'src/phero.generated'
+import { GloomhavenService } from '../_services/gloomhaven.service'
 
 @Component({
   selector: 'app-player-modal',

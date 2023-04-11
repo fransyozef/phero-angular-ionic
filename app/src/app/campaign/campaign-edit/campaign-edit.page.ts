@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
-import { AlertController, IonRouterOutlet, ModalController, NavController } from '@ionic/angular';
-import { GloomhavenService } from 'src/app/_services/gloomhaven.service';
-import { PlayerModalPage } from 'src/app/player-modal/player-modal.page';
-import { GloomhavenCampaign, GloomhavenCampaignEditDto, GloomhavenError } from 'src/phero.generated';
+import { Component, OnInit } from '@angular/core'
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms'
+import { ActivatedRoute } from '@angular/router'
+import { AlertController, IonRouterOutlet, ModalController, NavController } from '@ionic/angular'
+import { GloomhavenCampaign, GloomhavenCampaignEditDto, GloomhavenError } from '../../../phero.generated'
+import { GloomhavenService } from '../../_services/gloomhaven.service'
+import { PlayerModalPage } from '../../player-modal/player-modal.page'
 
 @Component({
   selector: 'app-campaign-edit',
@@ -13,12 +13,13 @@ import { GloomhavenCampaign, GloomhavenCampaignEditDto, GloomhavenError } from '
 })
 export class CampaignEditPage implements OnInit {
 
+  showHomeButton = false
+  isSubmitting = false
+
   campaignID!: string;
   campaign!: GloomhavenCampaign;
 
-  isSubmitting = false
   itemForm!: UntypedFormGroup
-
   item: GloomhavenCampaignEditDto = {
     title: '',
     reputation: 0,
@@ -45,10 +46,11 @@ export class CampaignEditPage implements OnInit {
       // tslint:disable-next-line:no-string-literal
       if (params['id']) {
         // tslint:disable-next-line:no-string-literal
-        this.campaignID = params['id'];
-        this.getItem();
+        this.campaignID = params['id']
+        this.getItem()
+        this.showHomeButton = !this.ionRouterOutlet.canGoBack()
       } else {
-        this.navCtrl.navigateRoot('/');
+        this.navCtrl.navigateRoot('/')
       }
     });
   }
@@ -108,7 +110,7 @@ export class CampaignEditPage implements OnInit {
         {
           text: 'Okay',
           handler: () => {
-            this.navCtrl.navigateBack('/');
+            this.navCtrl.navigateRoot('/');
           }
         }
       ]

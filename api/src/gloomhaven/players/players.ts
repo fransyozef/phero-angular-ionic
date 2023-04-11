@@ -28,8 +28,7 @@ export async function deletePlayer(playerID: string): Promise<boolean> {
     return returnValue
 }
 
-export async function deletePlayersFromCompaign(campaignID: string): Promise<boolean> {
-    let returnValue = false
+export async function deletePlayersFromCompaign(campaignID: string): Promise<void> {
     const db = getDatabase()
     const players = await getPlayersInCampaign(campaignID)
     if (players && players.length > 0) {
@@ -37,15 +36,12 @@ export async function deletePlayersFromCompaign(campaignID: string): Promise<boo
         for (let i = 0; i < totalPlayers; i++) {
             const id = players[i].id
             const index = await db.getIndex("/players", id)
-            console.log("campaignID" , campaignID , "index" , index)
             try {
                 await db.delete(`/players[${index}]`)
+                await db.save()
             } catch (e) { }
-            await db.reload()
         }
-        returnValue = true
     }
-    return returnValue
 }
 
 export async function getPlayersInCampaign(campaignID: string): Promise<GloomhavenPlayer[]> {

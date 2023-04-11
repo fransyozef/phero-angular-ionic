@@ -1,9 +1,16 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from '@angular/core'
 
+import { 
+  PheroClient, 
+  GloomhavenCampaign, 
+  GloomhavenCampaignAddDto, 
+  GloomhavenPlayer, 
+  GloomhavenPlayerAddDto, 
+  GloomhavenCampaignEditDto 
+} from "../../phero.generated"
 
-import { PheroClient, GloomhavenCampaign, GloomhavenCampaignAddDto, GloomhavenPlayer, GloomhavenPlayerAddDto, GloomhavenCharacters, GloomhavenCampaignEditDto } from "../../phero.generated";
-const fetch = window.fetch.bind(this);
-const pheroClient = new PheroClient(fetch);
+const fetch = window.fetch.bind(this)
+const pheroClient = new PheroClient(fetch)
 
 @Injectable({
   providedIn: 'root'
@@ -40,9 +47,8 @@ export class GloomhavenService {
     return await pheroClient.gloomhavenService.addCampaign(payload)
   }
 
-  async deleteCampaign(campaignID:string): Promise<boolean> {
+  async deleteCampaign(campaignID:string): Promise<void> {
     return await pheroClient.gloomhavenService.deleteCampaign(campaignID)
   }
-
 
 }

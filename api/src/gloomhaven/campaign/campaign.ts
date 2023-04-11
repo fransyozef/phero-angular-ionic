@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { getDatabase } from "../db"
 import { GloomhavenError, GloomhavenErrors } from "../errors"
 import { getPlayersInCampaign, deletePlayersFromCompaign } from "../players/players"
-import { GloomhavenCampaign, GloomhavenCampaignAddDto, GloomhavenCampaignEditDto, GloomhavenPartyError } from "./campaign.types"
+import { GloomhavenCampaign, GloomhavenCampaignAddDto, GloomhavenCampaignEditDto } from "./campaign.types"
 
 export async function updateCampaign(campaignID: string, payload: GloomhavenCampaignEditDto): Promise<GloomhavenCampaign> {
     const db = getDatabase()
@@ -25,7 +25,7 @@ export async function updateCampaign(campaignID: string, payload: GloomhavenCamp
 }
 
 
-export async function deleteCampaign(campaignID: string): Promise<boolean> {
+export async function deleteCampaign(campaignID: string): Promise<void> {
     const db = getDatabase()
 
     let indexFound = -1
@@ -39,12 +39,6 @@ export async function deleteCampaign(campaignID: string): Promise<boolean> {
         throw new GloomhavenError(GloomhavenErrors.CAMPAIGN_NOT_FOUND)
     }
 
-    try {
-        const deletedPlayers = await deletePlayersFromCompaign(campaignID)
-    } catch (e) {
-        console.log(e)
-    }
-
     // Delete the campaign
     try {
         await db.delete(`/campaigns[${indexFound}]`)
@@ -52,7 +46,11 @@ export async function deleteCampaign(campaignID: string): Promise<boolean> {
         throw new GloomhavenError(GloomhavenErrors.CAMPAIGN_NOT_FOUND)
     }
 
-    return true
+    try {
+        await db.reload()
+        await deletePlayersFromCompaign(campaignID)
+    } catch (e) { }
+
 }
 
 export async function getCampaign(campaignID: string): Promise<GloomhavenCampaign> {
@@ -80,7 +78,6 @@ export async function getCampaigns(): Promise<GloomhavenCampaign[]> {
     try {
         campaigns = await db.getObject<GloomhavenCampaign[]>("/campaigns")
     } catch (e) { }
-    console.log(campaigns);
     return campaigns;
 }
 
@@ -97,7 +94,6 @@ export async function addCampaign(payload: GloomhavenCampaignAddDto): Promise<Gl
 
     try {
         await db.push("/campaigns[]", campaign, true);
-        console.log(campaign);
         return campaign
     } catch (e) {
         throw new GloomhavenError(GloomhavenErrors.GENERIC)

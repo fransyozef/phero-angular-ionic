@@ -2,6 +2,7 @@
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
+      <ion-button *ngIf="showHomeButton" href="/"><ion-icon name='home'></ion-icon></ion-button>
     </ion-buttons>
     <ion-title>Edit campaign</ion-title>
   </ion-toolbar>

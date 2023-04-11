@@ -17,11 +17,20 @@
     </ion-card-header>
   
     <ion-card-content>
-      <ul>
-        <li>townprosperity: {{ campaign.townProsperity }}</li>
-        <li>reputation: {{ campaign.reputation }}</li>
-        <li>current scenario: {{ campaign.currentScenario }}</li>
-      </ul>
+      <ion-list>
+        <ion-item>
+          <ion-label>townprosperity</ion-label>
+          <ion-text>{{ campaign.townProsperity }}</ion-text>
+        </ion-item>
+        <ion-item>
+          <ion-label>reputation</ion-label>
+          <ion-text>{{ campaign.reputation }}</ion-text>
+        </ion-item>
+        <ion-item>
+          <ion-label>current scenario</ion-label>
+          <ion-text>{{ campaign.currentScenario }}</ion-text>
+        </ion-item>
+      </ion-list>
 
       <ion-buttons>
         <ion-button (click)="deleteCampaign(campaign.id)">delete</ion-button>
