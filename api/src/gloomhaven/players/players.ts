@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { getDatabase } from "../db"
 import { getCampaign } from "../campaign/campaign"
 import { GloomhavenError, GloomhavenErrors } from "../errors"
-import { GloomhavenPlayer, GloomhavenPlayerAddDto } from './players.types';
+import { GloomhavenPlayer, GloomhavenPlayerAddDto, GloomhavenPlayerEditDto } from './players.types';
 
 export async function deletePlayer(playerID: string): Promise<boolean> {
     const db = getDatabase()
@@ -66,7 +66,11 @@ export async function addPlayerToCampaign(campaignID: string, payload: Gloomhave
     const player: GloomhavenPlayer = {
         id: uuidv4(),
         campaignID: campaignID,
-        ...payload
+        level: 0,
+        xp: 0,
+        gold: 0,
+        goldTokens: 0,
+        ...payload,
     }
 
     const campaign = await getCampaign(campaignID)
@@ -111,5 +115,24 @@ export async function getPlayer(playerID: string = ""): Promise<GloomhavenPlayer
         return player
     } catch (e) {
         throw new GloomhavenError(GloomhavenErrors.PLAYER_NOT_FOUND)
+    }
+}
+
+export async function updatePlayer(playerID: string = "", payload: GloomhavenPlayerEditDto): Promise<GloomhavenPlayer> {
+    if (playerID === "") {
+        throw new GloomhavenError(GloomhavenErrors.PLAYER_NOT_FOUND)
+    }
+    const player = await getPlayer(playerID)
+    const db = getDatabase()
+
+    const updatedPlayer: GloomhavenPlayer = { ...player, ...payload }
+    const indexFound = await db.getIndex("/players", playerID)
+    try {
+        await db.delete(`/players[${indexFound}]`)
+        await db.reload()
+        await db.push("/players[]", updatedPlayer, true);
+        return updatedPlayer
+    } catch (e) {
+        throw new GloomhavenError(GloomhavenErrors.GENERIC)
     }
 }

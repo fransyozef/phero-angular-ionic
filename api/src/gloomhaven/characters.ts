@@ -4,5 +4,6 @@ export enum GloomhavenCharacters {
     Mindthief = "Mindthief",
     Scoundrel = "Scoundrel",
     Spellweaver = "Spellweaver",
-    Tinkerer = "Tinkerer"
+    Tinkerer = "Tinkerer",
+    NONE = "NONE"
   }

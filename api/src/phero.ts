@@ -4,7 +4,7 @@ import * as gloomhavenCampaignFunctions from "./gloomhaven/campaign/campaign"
 import * as gloomhavenPlayerFunctions from "./gloomhaven/players/players"
 
 export const gloomhavenService = createService({
-  getCampaigns : gloomhavenCampaignFunctions.getCampaigns,
+  getCampaigns: gloomhavenCampaignFunctions.getCampaigns,
   addCampaign: gloomhavenCampaignFunctions.addCampaign,
   getCampaign: gloomhavenCampaignFunctions.getCampaign,
   deleteCampaign: gloomhavenCampaignFunctions.deleteCampaign,
@@ -12,6 +12,7 @@ export const gloomhavenService = createService({
   getPlayersInCampaign: gloomhavenPlayerFunctions.getPlayersInCampaign,
   addPlayerToCampaign: gloomhavenPlayerFunctions.addPlayerToCampaign,
   deletePlayer: gloomhavenPlayerFunctions.deletePlayer,
-  getPlayer: gloomhavenPlayerFunctions.getPlayer
+  getPlayer: gloomhavenPlayerFunctions.getPlayer,
+  updatePlayer: gloomhavenPlayerFunctions.updatePlayer,
 })
 

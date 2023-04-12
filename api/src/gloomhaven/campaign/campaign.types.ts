@@ -14,10 +14,3 @@ export interface GloomhavenCampaign extends GloomhavenCampaignEditDto {
   id: string
   players: GloomhavenPlayer[]
 }
-
-
-export class GloomhavenPartyError extends Error {
-  constructor() {
-    super(`Party not found`)
-  }
-}

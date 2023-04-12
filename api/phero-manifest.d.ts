@@ -10,16 +10,18 @@ export interface GloomhavenCampaignEditDto extends GloomhavenCampaignAddDto {
 export interface GloomhavenCampaignAddDto {
     title: string;
 }
-export interface GloomhavenPlayer extends GloomhavenPlayerAddDto {
+export interface GloomhavenPlayer extends GloomhavenPlayerEditDto {
     id: string;
     campaignID: string;
 }
-export interface GloomhavenPlayerAddDto {
-    name: string;
+export interface GloomhavenPlayerEditDto extends GloomhavenPlayerAddDto {
     level: number;
     xp: number;
     gold: number;
     goldTokens: number;
+}
+export interface GloomhavenPlayerAddDto {
+    name: string;
     character: GloomhavenCharacters;
 }
 export enum GloomhavenCharacters {
@@ -28,7 +30,8 @@ export enum GloomhavenCharacters {
     Mindthief = "Mindthief",
     Scoundrel = "Scoundrel",
     Spellweaver = "Spellweaver",
-    Tinkerer = "Tinkerer"
+    Tinkerer = "Tinkerer",
+    NONE = "NONE"
 }
 export class GloomhavenError extends Error {
     constructor(message: string);
@@ -45,4 +48,5 @@ export class gloomhavenService extends PheroService {
     addPlayerToCampaign(campaignID: string, payload: GloomhavenPlayerAddDto): Promise<GloomhavenPlayer>;
     deletePlayer(playerID: string): Promise<boolean>;
     getPlayer(playerID: string): Promise<GloomhavenPlayer>;
+    updatePlayer(playerID: string, payload: GloomhavenPlayerEditDto): Promise<GloomhavenPlayer>;
 }

@@ -2,20 +2,17 @@ import { GloomhavenCharacters } from "../characters"
 
 export interface GloomhavenPlayerAddDto {
   name: string
-  level: number
-  xp: number
-  gold: number
-  goldTokens: number,
   character: GloomhavenCharacters
 }
 
-export interface GloomhavenPlayer extends GloomhavenPlayerAddDto {
-  id: string
-  campaignID: string
+export interface GloomhavenPlayerEditDto extends GloomhavenPlayerAddDto {
+  level: number
+  xp: number
+  gold: number
+  goldTokens: number
 }
 
-export class GloomhavenPlayerError extends Error {
-  constructor() {
-    super(`Player not found`)
-  }
+export interface GloomhavenPlayer extends GloomhavenPlayerEditDto {
+  id: string
+  campaignID: string
 }
