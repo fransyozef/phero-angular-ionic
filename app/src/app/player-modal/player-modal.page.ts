@@ -15,11 +15,7 @@ export class PlayerModalPage implements OnInit {
 
   item: GloomhavenPlayerAddDto = {
     name: '',
-    level: 0,
-    xp: 0,
-    gold: 0,
-    goldTokens: 0,
-    character: GloomhavenCharacters.Brute
+    character: GloomhavenCharacters.NONE
   }
 
   isSubmitting = false

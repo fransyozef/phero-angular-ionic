@@ -68,6 +68,7 @@
             <ion-card-content>
               <ion-buttons>
                 <ion-button (click)="deletePlayer(player.id)">delete</ion-button>
+                <ion-button routerLink="/player/edit/{{player.id}}">edit</ion-button>
               </ion-buttons>
             </ion-card-content>
           </ion-card>

@@ -7,6 +7,11 @@ import { CampaignEditPage } from './campaign-edit/campaign-edit.page';
 
 const routes: Routes = [
   {
+    path: '',
+    redirectTo: '/campaign/overview',
+    pathMatch: 'full'
+  },
+  {
     path: 'overview',
     component: CampaignPage
   },
@@ -24,4 +29,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class CampaignPageRoutingModule {}
+export class CampaignPageRoutingModule { }

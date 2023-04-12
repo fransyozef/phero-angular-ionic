@@ -58,15 +58,11 @@ export class CampaignEditPage implements OnInit {
   async getItem() {
     try {
       const campaign = await this.gloomhavenService.getCampaign(this.campaignID)
-      // console.log(campaign)
       this.campaign = campaign
 
       // we only need the rest key properties
       const { id, players, ...rest } = campaign;
       this.item = rest
-  
-      // console.log(this.item)
-    
     } catch (e) {
       if (e instanceof GloomhavenError) {
         alert(e.message)
@@ -87,12 +83,11 @@ export class CampaignEditPage implements OnInit {
   }
 
   async submit() {
-    if(this.itemForm.valid) {
-      console.log(this.itemForm.value)
+    if (this.itemForm.valid) {
       try {
-        const result = await this.gloomhavenService.updateCampaign(this.campaignID,this.itemForm.value)
+        const result = await this.gloomhavenService.updateCampaign(this.campaignID, this.itemForm.value)
         await this.presentSuccess()
-      } catch(e) {
+      } catch (e) {
         if (e instanceof GloomhavenError) {
           alert(e.message)
         } else {
@@ -105,7 +100,7 @@ export class CampaignEditPage implements OnInit {
   async presentSuccess() {
     const alert = await this.alertController.create({
       header: 'Success!',
-      subHeader : 'Campaign has been edited',
+      subHeader: 'Campaign has been updated.',
       buttons: [
         {
           text: 'Okay',
@@ -121,7 +116,7 @@ export class CampaignEditPage implements OnInit {
   async presentPlayerDeleteSuccess() {
     const alert = await this.alertController.create({
       header: 'Success!',
-      subHeader : 'Player has been removed from the campaign',
+      subHeader: 'Player has been removed from the campaign.',
       buttons: [
         {
           text: 'Okay'
@@ -140,8 +135,8 @@ export class CampaignEditPage implements OnInit {
 
     const modal = await this.modalController.create({
       component: PlayerModalPage,
-      componentProps: { 
-        campaignID : this.campaignID
+      componentProps: {
+        campaignID: this.campaignID
       }
     });
 
@@ -154,10 +149,10 @@ export class CampaignEditPage implements OnInit {
     }
   }
 
-  async deletePlayer(playerID:string) {
+  async deletePlayer(playerID: string) {
     try {
       const result = await this.gloomhavenService.deletePlayer(playerID)
-      if(result === true) {
+      if (result === true) {
         await this.presentPlayerDeleteSuccess()
         await this.getItem()
       }

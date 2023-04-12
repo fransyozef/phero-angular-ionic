@@ -21,7 +21,7 @@ export class CampaignAddPage implements OnInit {
 
   campaign!: GloomhavenCampaign;
 
-  constructor(    
+  constructor(
     private ionRouterOutlet: IonRouterOutlet,
     private navCtrl: NavController,
     public alertController: AlertController,
@@ -43,24 +43,24 @@ export class CampaignAddPage implements OnInit {
 
   async submit() {
     this.isSubmitting = true;
-      try {
-        const campaign = await this.gloomhavenService.addCampaign(this.itemForm.value);
-        this.campaign = campaign
-        await this.presentSuccess()
-      } catch (e) {
-        if (e instanceof GloomhavenError) {
-          alert(e.message)
-        } else {
-          console.log(e)
-        }
+    try {
+      const campaign = await this.gloomhavenService.addCampaign(this.itemForm.value);
+      this.campaign = campaign
+      await this.presentSuccess()
+    } catch (e) {
+      if (e instanceof GloomhavenError) {
+        alert(e.message)
+      } else {
+        console.log(e)
       }
-      this.isSubmitting = false;
+    }
+    this.isSubmitting = false;
   }
 
   async presentSuccess() {
     const alert = await this.alertController.create({
       header: 'Success!',
-      subHeader : 'Campaign has been added',
+      subHeader: 'Campaign has been added',
       buttons: [
         {
           text: 'Okay',

@@ -27,14 +27,13 @@ export class CampaignPage implements OnInit {
     this.campaigns = []
     try {
       const campaigns = await this.gloomhavenService.getCampaigns()
-      this.campaigns = campaigns;
-      console.log(this.campaigns)
+      this.campaigns = campaigns
     } catch (e) {
       alert("Something went wrong");
     }
   }
 
-  async deleteCampaign(campaignID:string) {
+  async deleteCampaign(campaignID: string) {
     try {
       await this.gloomhavenService.deleteCampaign(campaignID)
       await this.presentDeleteCampaignSuccess()
@@ -50,7 +49,7 @@ export class CampaignPage implements OnInit {
   async presentDeleteCampaignSuccess() {
     const alert = await this.alertController.create({
       header: 'Success!',
-      subHeader : 'Campaign has been deleted',
+      subHeader: 'Campaign has been deleted',
       buttons: [
         {
           text: 'Okay',

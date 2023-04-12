@@ -6,7 +6,8 @@ import {
   GloomhavenCampaignAddDto,
   GloomhavenPlayer,
   GloomhavenPlayerAddDto,
-  GloomhavenCampaignEditDto
+  GloomhavenCampaignEditDto,
+  GloomhavenPlayerEditDto
 } from "../../phero.generated"
 
 const fetch = window.fetch.bind(this)
@@ -18,6 +19,10 @@ const pheroClient = new PheroClient(fetch)
 export class GloomhavenService {
 
   constructor() { }
+
+  async updatePlayer(playerID: string, payload: GloomhavenPlayerEditDto): Promise<GloomhavenPlayer> {
+    return await pheroClient.gloomhavenService.updatePlayer(playerID, payload)
+  }
 
   async getPlayer(playerID: string): Promise<GloomhavenPlayer> {
     return await pheroClient.gloomhavenService.getPlayer(playerID)

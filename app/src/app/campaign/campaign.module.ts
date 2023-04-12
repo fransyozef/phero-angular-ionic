@@ -27,4 +27,4 @@ import { PlayerModalPageModule } from '../player-modal/player-modal.module';
     CampaignEditPage
   ]
 })
-export class CampaignPageModule {}
+export class CampaignPageModule { }

@@ -1,0 +1,63 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+      <ion-button *ngIf="showHomeButton" href="/"><ion-icon name='home'></ion-icon></ion-button>
+    </ion-buttons>
+    <ion-title>Edit player</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="itemForm" *ngIf="itemForm">
+    <ion-list lines="full" class="ion-no-margin ion-no-padding">
+      <ion-item-group>
+        <ion-item>
+          <ion-text color="secondary">
+            <h1>Player details</h1>
+          </ion-text>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked">Name <ion-text color="danger">*</ion-text>
+          </ion-label>
+          <ion-input required clearInput type="text" name="name" formControlName="name" [value]="item.name">
+          </ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked">Level <ion-text color="danger">*</ion-text>
+          </ion-label>
+          <ion-input required clearInput type="number" name="level" formControlName="level"
+            [value]="item.level">
+          </ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked">Xp <ion-text color="danger">*</ion-text>
+          </ion-label>
+          <ion-input required clearInput type="number" name="xp" formControlName="xp"
+            [value]="item.xp">
+          </ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked">Gold <ion-text color="danger">*</ion-text>
+          </ion-label>
+          <ion-input required clearInput type="number" name="gold" formControlName="gold"
+            [value]="item.gold">
+          </ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked">Gold tokens <ion-text color="danger">*</ion-text>
+          </ion-label>
+          <ion-input required clearInput type="number" name="goldTokens" formControlName="goldTokens"
+            [value]="item.goldTokens">
+          </ion-input>
+        </ion-item>
+      </ion-item-group>
+    </ion-list>
+  </form>
+</ion-content>
+
+<ion-footer>
+  <ion-button expand="block" type="submit" (click)="submit()" [disabled]="!itemForm.valid || isSubmitting">
+    Update player
+  </ion-button>
+</ion-footer>
