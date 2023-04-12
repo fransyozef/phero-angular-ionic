@@ -95,3 +95,21 @@ export async function addPlayerToCampaign(campaignID: string, payload: Gloomhave
     }
     throw new GloomhavenError(GloomhavenErrors.GENERIC)
 }
+
+export async function getPlayer(playerID: string = ""): Promise<GloomhavenPlayer> {
+    if (playerID === "") {
+        throw new GloomhavenError(GloomhavenErrors.PLAYER_NOT_FOUND)
+    }
+    const db = getDatabase()
+    try {
+        const player = await db.find<GloomhavenPlayer>("/players", (player: GloomhavenPlayer) => {
+            return player.id === playerID
+        })
+        if (!player) {
+            throw new GloomhavenError(GloomhavenErrors.PLAYER_NOT_FOUND)
+        }
+        return player
+    } catch (e) {
+        throw new GloomhavenError(GloomhavenErrors.PLAYER_NOT_FOUND)
+    }
+}

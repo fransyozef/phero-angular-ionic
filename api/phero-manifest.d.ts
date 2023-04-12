@@ -44,4 +44,5 @@ export class gloomhavenService extends PheroService {
     getPlayersInCampaign(campaignID: string): Promise<GloomhavenPlayer[]>;
     addPlayerToCampaign(campaignID: string, payload: GloomhavenPlayerAddDto): Promise<GloomhavenPlayer>;
     deletePlayer(playerID: string): Promise<boolean>;
+    getPlayer(playerID: string): Promise<GloomhavenPlayer>;
 }
